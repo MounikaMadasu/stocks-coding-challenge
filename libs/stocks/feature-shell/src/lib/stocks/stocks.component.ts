@@ -11,6 +11,8 @@ export class StocksComponent {
   public stockPickerForm: FormGroup;
 
   quotes$ = this.priceQuery.priceQueries$;
+  maxDate = new Date();
+  toMaxDate = new Date();
 
   public timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -26,8 +28,14 @@ export class StocksComponent {
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      period: [null, Validators.required],
+      fromDate: ['', Validators.required],
+      toDate: ['', Validators.required]
     });
+  }
+
+  handleDateChagne(event) {
+    this.toMaxDate = new Date(event.value);
   }
 
   fetchQuote() {
